@@ -1,14 +1,15 @@
--- KavShare Supabase Initial Database Schema
+-- KavShare Supabase Initial Database Schema (Clerk Auth Compatible)
 -- Migration Date: 2026-05-27
 
 -- 1. Enable UUID Extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- 2. Profiles Table (Linked to Supabase Auth)
+-- 2. Profiles Table (Linked to Clerk User IDs)
 CREATE TABLE IF NOT EXISTS public.profiles (
-    id UUID REFERENCES auth.users(id) ON DELETE CASCADE PRIMARY KEY,
+    id TEXT PRIMARY KEY, -- Clerk User ID (e.g. user_2Nizn3...)
     email TEXT UNIQUE NOT NULL,
     full_name TEXT,
+    role TEXT DEFAULT 'seeker' NOT NULL, -- 'provider' or 'seeker'
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
@@ -21,12 +22,12 @@ CREATE POLICY "Allow public read access to profiles"
 ON public.profiles FOR SELECT USING (true);
 
 CREATE POLICY "Allow users to update their own profile" 
-ON public.profiles FOR UPDATE USING (auth.uid() = id);
+ON public.profiles FOR UPDATE USING (id = current_setting('request.jwt.claims', true)::json->>'sub');
 
 -- 3. Files Table (Metadata of uploaded shares)
 CREATE TABLE IF NOT EXISTS public.files (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
+    user_id TEXT REFERENCES public.profiles(id) ON DELETE SET NULL,
     name TEXT NOT NULL,
     size BIGINT NOT NULL,
     mime_type TEXT NOT NULL,
@@ -44,8 +45,8 @@ ALTER TABLE public.files ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public read/download by file ID" 
 ON public.files FOR SELECT USING (expires_at IS NULL OR expires_at > now());
 
-CREATE POLICY "Allow authenticated users to upload and manage their files" 
-ON public.files FOR ALL USING (auth.uid() = user_id);
+CREATE POLICY "Allow users to upload and manage their files" 
+ON public.files FOR ALL USING (user_id = current_setting('request.jwt.claims', true)::json->>'sub');
 
 -- 4. Downloads Logging Table
 CREATE TABLE IF NOT EXISTS public.downloads (
@@ -68,6 +69,6 @@ ON public.downloads FOR SELECT USING (
     EXISTS (
         SELECT 1 FROM public.files 
         WHERE public.files.id = public.downloads.file_id 
-        AND public.files.user_id = auth.uid()
+        AND public.files.user_id = current_setting('request.jwt.claims', true)::json->>'sub'
     )
 );
