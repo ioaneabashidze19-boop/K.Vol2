@@ -24,11 +24,11 @@ const nextConfig: NextConfig = {
   },
 
   /* Internationalization (i18n) support */
-  // Note: In Next.js 16+ App Router, the `i18n` option in `next.config` is unsupported 
+  // Note: In Next.js 16+ App Router, the `i18n` option in `next.config` is unsupported
   // and will crash the production build with Pages Router errors.
   // Instead, internationalization is handled dynamically using Middleware (middleware.ts)
   // and routing via the `[locale]` folder structure (e.g. app/[locale]/layout.tsx).
-  // 
+  //
   // If you ever use a hybrid setup or Pages Router:
   // i18n: {
   //   locales: ["en", "es", "fr"],

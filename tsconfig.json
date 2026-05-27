@@ -3,11 +3,7 @@
     /* Target ES2020 features for compile output compatibility */
     "target": "ES2020",
     /* Library files to include in compilation */
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     /* Allow JavaScript files to be compiled */
     "allowJs": true,
     /* Skip type checking of declaration files for compiler performance */
@@ -56,18 +52,10 @@
     ],
     /* Custom paths mapping for import aliases */
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@/components/*": [
-        "./src/components/*"
-      ],
-      "@/lib/*": [
-        "./src/lib/*"
-      ],
-      "@/app/*": [
-        "./src/app/*"
-      ]
+      "@/*": ["./src/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/app/*": ["./src/app/*"]
     }
   },
   "include": [
@@ -78,7 +66,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

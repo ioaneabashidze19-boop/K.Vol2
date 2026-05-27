@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-
 const dictionaries: Record<
   string,
   {
@@ -15,7 +14,8 @@ const dictionaries: Record<
 > = {
   en: {
     title: "Share Files Instantly, Securely",
-    subtitle: "KavShare is the ultimate next-generation platform for high-speed file sharing and collaboration. Drag, drop, and share with anyone, anywhere.",
+    subtitle:
+      "KavShare is the ultimate next-generation platform for high-speed file sharing and collaboration. Drag, drop, and share with anyone, anywhere.",
     ctaPrimary: "Get Started",
     ctaSecondary: "Learn More",
     featuresTitle: "Why Choose KavShare?",
@@ -40,7 +40,8 @@ const dictionaries: Record<
   },
   es: {
     title: "Comparte Archivos al Instante y de forma Segura",
-    subtitle: "KavShare es la plataforma definitiva de próxima generación para compartir archivos y colaborar a alta velocidad. Arrastra, suelta y comparte con quien sea, donde sea.",
+    subtitle:
+      "KavShare es la plataforma definitiva de próxima generación para compartir archivos y colaborar a alta velocidad. Arrastra, suelta y comparte con quien sea, donde sea.",
     ctaPrimary: "Empezar",
     ctaSecondary: "Saber Más",
     featuresTitle: "¿Por qué elegir KavShare?",
@@ -65,7 +66,8 @@ const dictionaries: Record<
   },
   fr: {
     title: "Partagez des Fichiers Instantanément, en toute Sécurité",
-    subtitle: "KavShare est la plateforme ultime de nouvelle génération pour le partage de fichiers et la collaboration à grande vitesse. Glissez, déposez et partagez avec n'importe qui, n'importe où.",
+    subtitle:
+      "KavShare est la plateforme ultime de nouvelle génération pour le partage de fichiers et la collaboration à grande vitesse. Glissez, déposez et partagez avec n'importe qui, n'importe où.",
     ctaPrimary: "Commencer",
     ctaSecondary: "En savoir plus",
     featuresTitle: "Pourquoi Choisir KavShare ?",
@@ -90,11 +92,7 @@ const dictionaries: Record<
   },
 };
 
-export default async function HomePage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const dict = dictionaries[locale] || dictionaries.en;
 
@@ -120,9 +118,7 @@ export default async function HomePage({
               <Link
                 href="/en"
                 className={`px-1.5 py-0.5 rounded transition ${
-                  locale === "en"
-                    ? "bg-purple-600 text-white font-bold"
-                    : "hover:text-white"
+                  locale === "en" ? "bg-purple-600 text-white font-bold" : "hover:text-white"
                 }`}
               >
                 EN
@@ -130,9 +126,7 @@ export default async function HomePage({
               <Link
                 href="/es"
                 className={`px-1.5 py-0.5 rounded transition ${
-                  locale === "es"
-                    ? "bg-purple-600 text-white font-bold"
-                    : "hover:text-white"
+                  locale === "es" ? "bg-purple-600 text-white font-bold" : "hover:text-white"
                 }`}
               >
                 ES
@@ -140,9 +134,7 @@ export default async function HomePage({
               <Link
                 href="/fr"
                 className={`px-1.5 py-0.5 rounded transition ${
-                  locale === "fr"
-                    ? "bg-purple-600 text-white font-bold"
-                    : "hover:text-white"
+                  locale === "fr" ? "bg-purple-600 text-white font-bold" : "hover:text-white"
                 }`}
               >
                 FR
@@ -196,9 +188,7 @@ export default async function HomePage({
                 <h3 className="text-xl font-semibold mb-2 group-hover:text-purple-400 transition-colors">
                   {feature.title}
                 </h3>
-                <p className="text-slate-400 text-sm leading-relaxed">
-                  {feature.desc}
-                </p>
+                <p className="text-slate-400 text-sm leading-relaxed">{feature.desc}</p>
               </div>
             ))}
           </div>

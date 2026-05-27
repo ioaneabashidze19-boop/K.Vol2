@@ -28,20 +28,14 @@ export function proxy(request: NextRequest) {
   if (pathnameIsMissingLocale) {
     const locale = getLocale(request);
     return NextResponse.redirect(
-      new URL(
-        `/${locale}${pathname.startsWith("/") ? "" : "/"}${pathname}`,
-        request.url
-      )
+      new URL(`/${locale}${pathname.startsWith("/") ? "" : "/"}${pathname}`, request.url)
     );
   }
 
   return NextResponse.next();
 }
 
-
 export const config = {
   // Matcher ignoring `/api/`, `/_next/` (static/images), and static assets (favicon, images, etc.)
-  matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|images|.*\\..*).*)",
-  ],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|images|.*\\..*).*)"],
 };

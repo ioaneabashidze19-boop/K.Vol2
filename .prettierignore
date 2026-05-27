@@ -1,0 +1,17 @@
+# Build and compilation outputs
+.next/
+out/
+build/
+dist/
+coverage/
+
+# Dependency directories
+node_modules/
+
+# Lockfiles and environment settings
+package-lock.json
+.env*
+
+# TypeScript compile info
+*.tsbuildinfo
+next-env.d.ts

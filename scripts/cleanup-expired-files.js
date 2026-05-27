@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-require-imports */
 /**
  * Cron / Scheduled Job Script: Cleanup Expired Files
- * Description: Scans the files metadata table for entries where the expiration timestamp 
- *              has passed, deletes files from the Supabase Storage bucket, and removes 
+ * Description: Scans the files metadata table for entries where the expiration timestamp
+ *              has passed, deletes files from the Supabase Storage bucket, and removes
  *              metadata records from the database.
- * 
+ *
  * Run with: `node scripts/cleanup-expired-files.js`
  */
 
@@ -14,7 +16,9 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseServiceKey) {
-  console.error("Missing environment variables. Make sure NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are set.");
+  console.error(
+    "Missing environment variables. Make sure NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are set."
+  );
   process.exit(1);
 }
 
@@ -53,10 +57,7 @@ async function cleanup() {
       }
 
       // Delete database record
-      const { error: dbError } = await supabase
-        .from("files")
-        .delete()
-        .eq("id", file.id);
+      const { error: dbError } = await supabase.from("files").delete().eq("id", file.id);
 
       if (dbError) {
         console.error(`Failed to delete database record for ID ${file.id}:`, dbError.message);
