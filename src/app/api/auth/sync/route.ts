@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { createClient } from "@supabase/supabase-js";
 
+import { UserRole } from "@/lib/types/roles";
+
 const supabaseUrl =
   process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder-project.supabase.co";
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "placeholder-service-role-key";
@@ -58,18 +60,20 @@ export async function POST() {
       );
     }
 
-    const fullName = `${clerkUser.firstName || ""} ${clerkUser.lastName || ""}`.trim() || null;
+    const firstName = clerkUser.firstName || null;
+    const lastName = clerkUser.lastName || null;
+    const profileCompleted = !!(firstName && lastName);
 
     // Resolve user role from unsafeMetadata (set during signup flow) or publicMetadata
     const role = (clerkUser.unsafeMetadata?.userRole ||
       clerkUser.publicMetadata?.userRole ||
-      "seeker") as string;
+      "seeker") as UserRole;
 
-    // Check if a profile already exists
-    const { data: profile, error: fetchError } = await supabaseAdmin
-      .from("profiles")
+    // Check if a user profile already exists (searching by clerk_id)
+    const { data: dbUser, error: fetchError } = await supabaseAdmin
+      .from("users")
       .select("*")
-      .eq("id", userId)
+      .eq("clerk_id", userId)
       .single();
 
     // Code PGRST116 represents 'no rows returned' which is expected if the user is new
@@ -80,18 +84,26 @@ export async function POST() {
       );
     }
 
-    if (profile) {
+    if (dbUser) {
       // Sync update if metadata attributes differ
-      if (profile.email !== email || profile.full_name !== fullName || profile.role !== role) {
-        const { data: updatedProfile, error: updateError } = await supabaseAdmin
-          .from("profiles")
+      if (
+        dbUser.email !== email ||
+        dbUser.first_name !== firstName ||
+        dbUser.last_name !== lastName ||
+        dbUser.user_role !== role ||
+        dbUser.profile_completed !== profileCompleted
+      ) {
+        const { data: updatedUser, error: updateError } = await supabaseAdmin
+          .from("users")
           .update({
             email,
-            full_name: fullName,
-            role,
+            first_name: firstName,
+            last_name: lastName,
+            user_role: role,
+            profile_completed: profileCompleted,
             updated_at: new Date().toISOString(),
           })
-          .eq("id", userId)
+          .eq("clerk_id", userId)
           .select("*")
           .single();
 
@@ -102,20 +114,22 @@ export async function POST() {
           );
         }
 
-        return NextResponse.json({ profile: updatedProfile, synced: true });
+        return NextResponse.json({ user: updatedUser, synced: true });
       }
 
-      return NextResponse.json({ profile, synced: false });
+      return NextResponse.json({ user: dbUser, synced: false });
     }
 
-    // Insert new profile record
-    const { data: newProfile, error: insertError } = await supabaseAdmin
-      .from("profiles")
+    // Insert new user record
+    const { data: newUser, error: insertError } = await supabaseAdmin
+      .from("users")
       .insert({
-        id: userId,
+        clerk_id: userId,
         email,
-        full_name: fullName,
-        role,
+        first_name: firstName,
+        last_name: lastName,
+        user_role: role,
+        profile_completed: profileCompleted,
       })
       .select("*")
       .single();
@@ -127,12 +141,12 @@ export async function POST() {
       );
     }
 
-    return NextResponse.json({ profile: newProfile, synced: true });
+    return NextResponse.json({ user: newUser, synced: true });
   } catch (error: unknown) {
     const errorMessage =
       error instanceof Error
         ? error.message
-        : "An unexpected error occurred during profile synchronization";
+        : "An unexpected error occurred during user synchronization";
     return NextResponse.json(
       {
         error: {

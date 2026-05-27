@@ -4,35 +4,38 @@ import { useEffect, useRef, useState } from "react";
 
 import { useUser } from "@clerk/nextjs";
 
-export interface SyncProfile {
+export interface SyncUser {
   id: string;
+  clerk_id: string;
   email: string;
-  full_name: string | null;
-  role: string;
+  user_role: string;
+  first_name: string | null;
+  last_name: string | null;
+  profile_completed: boolean;
   created_at: string;
   updated_at: string;
 }
 
 export interface UseSyncUserResult {
   isSyncing: boolean;
-  profile: SyncProfile | null;
+  user: SyncUser | null;
   error: Error | null;
 }
 
 /**
- * Custom React hook to synchronize the Clerk authenticated user profile
- * metadata details with the local Supabase profiles table on sign-in.
+ * Custom React hook to synchronize the Clerk authenticated user credentials
+ * with the local Supabase users table on sign-in.
  */
 export function useSyncUser(): UseSyncUserResult {
-  const { user, isLoaded, isSignedIn } = useUser();
+  const { user: clerkUser, isLoaded, isSignedIn } = useUser();
   const [isSyncing, setIsSyncing] = useState<boolean>(false);
-  const [profile, setProfile] = useState<SyncProfile | null>(null);
+  const [dbUser, setDbUser] = useState<SyncUser | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const syncAttempted = useRef<boolean>(false);
 
   useEffect(() => {
     // Return early if authentication state is still loading or user is not signed in
-    if (!isLoaded || !isSignedIn || !user || syncAttempted.current || isSyncing) {
+    if (!isLoaded || !isSignedIn || !clerkUser || syncAttempted.current || isSyncing) {
       return;
     }
 
@@ -52,10 +55,10 @@ export function useSyncUser(): UseSyncUserResult {
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.error?.message || "Failed to synchronize profile database record");
+          throw new Error(data.error?.message || "Failed to synchronize user database record");
         }
 
-        setProfile(data.profile);
+        setDbUser(data.user);
       } catch (err: unknown) {
         setError(
           err instanceof Error
@@ -74,7 +77,7 @@ export function useSyncUser(): UseSyncUserResult {
     };
 
     performSync();
-  }, [isLoaded, isSignedIn, user, isSyncing]);
+  }, [isLoaded, isSignedIn, clerkUser, isSyncing]);
 
-  return { isSyncing, profile, error };
+  return { isSyncing, user: dbUser, error };
 }
