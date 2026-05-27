@@ -9,15 +9,32 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^7.4.1",
+    "@google/generative-ai": "^0.24.1",
+    "@radix-ui/react-slot": "^1.2.4",
+    "@stripe/react-stripe-js": "^6.4.0",
+    "@stripe/stripe-js": "^9.7.0",
     "@supabase/supabase-js": "^2.106.2",
+    "cheerio": "^1.2.0",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.40.0",
+    "groq-sdk": "^1.2.0",
+    "lucide-react": "^1.16.0",
     "next": "16.2.6",
+    "next-intl": "^4.12.0",
+    "playwright": "^1.60.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "tailwind-merge": "^3.6.0"
+    "stripe": "^22.1.1",
+    "svix": "^1.94.0",
+    "tailwind-merge": "^3.6.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "@tailwindcss/postcss": "^4",
+    "@types/cheerio": "^0.22.35",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
