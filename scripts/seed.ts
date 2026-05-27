@@ -2,17 +2,20 @@
  * Database Seeding Script for KavShare.
  * Run with: `npx ts-node scripts/seed.ts`
  */
-import { createClient } from "@supabase/supabase-js";
+// import { createClient } from "@supabase/supabase-js";
+
 
 // Ensure environment variables are loaded (for standalone script executions)
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "http://localhost:54321";
+// const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "http://localhost:54321";
+
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 
 if (!supabaseServiceKey) {
   console.warn("Warning: SUPABASE_SERVICE_ROLE_KEY is not defined. Local seeding might fail.");
 }
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+// const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
 
 async function main() {
   console.log("🌱 Starting local database seeding...");

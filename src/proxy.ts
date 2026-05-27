@@ -34,7 +34,10 @@ export function proxy(request: NextRequest) {
       )
     );
   }
+
+  return NextResponse.next();
 }
+
 
 export const config = {
   // Matcher ignoring `/api/`, `/_next/` (static/images), and static assets (favicon, images, etc.)
