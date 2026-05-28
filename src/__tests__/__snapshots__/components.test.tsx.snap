@@ -1,0 +1,501 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`FilterBar Component Suite renders active filter chips 1`] = `
+<div
+  class="bg-slate-900/30 border border-slate-850 p-4 rounded-2xl flex flex-col gap-3 md:flex-row md:items-center justify-between w-full"
+>
+  <div
+    class="flex flex-wrap items-center gap-2"
+  >
+    <span
+      class="text-[10px] uppercase font-bold text-cyan-400 tracking-wider"
+    >
+      Active Filters (
+      3
+      ):
+    </span>
+    <span
+      class="bg-slate-950 border border-slate-800 text-[10px] font-bold text-text-secondary px-2.5 py-1 rounded-lg flex items-center gap-1.5 capitalize"
+    >
+      Category: 
+      SaaS Dev
+      <button
+        class="hover:text-cyan-400 transition"
+        title="Remove Category"
+      >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-x h-3 w-3"
+          fill="none"
+          height="24"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M18 6 6 18"
+          />
+          <path
+            d="m6 6 12 12"
+          />
+        </svg>
+      </button>
+    </span>
+    <span
+      class="bg-slate-950 border border-slate-800 text-[10px] font-bold text-text-secondary px-2.5 py-1 rounded-lg flex items-center gap-1.5"
+    >
+      Rating: 
+      4
+      + ★
+      <button
+        class="hover:text-cyan-400 transition"
+        title="Remove Rating"
+      >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-x h-3 w-3"
+          fill="none"
+          height="24"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M18 6 6 18"
+          />
+          <path
+            d="m6 6 12 12"
+          />
+        </svg>
+      </button>
+    </span>
+    <span
+      class="bg-slate-950 border border-slate-800 text-[10px] font-bold text-text-secondary px-2.5 py-1 rounded-lg flex items-center gap-1.5"
+    >
+      Max starting: $
+      25,000
+      <button
+        class="hover:text-cyan-400 transition"
+        title="Remove budget cap"
+      >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-x h-3 w-3"
+          fill="none"
+          height="24"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M18 6 6 18"
+          />
+          <path
+            d="m6 6 12 12"
+          />
+        </svg>
+      </button>
+    </span>
+    <button
+      class="text-[10px] font-bold text-text-muted hover:text-cyan-400 flex items-center gap-1.5 ml-2"
+      title="Clear all filters"
+    >
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-rotate-ccw h-3 w-3"
+        fill="none"
+        height="24"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"
+        />
+        <path
+          d="M3 3v5h5"
+        />
+      </svg>
+       Clear All
+    </button>
+  </div>
+  <button
+    class="flex items-center gap-2 self-start md:self-auto text-xs font-semibold px-4 py-2 border rounded-xl transition bg-slate-900 border-slate-800 text-text-secondary hover:border-slate-700"
+  >
+    <svg
+      aria-hidden="true"
+      class="lucide lucide-sliders-horizontal h-4 w-4"
+      fill="none"
+      height="24"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10 5H3"
+      />
+      <path
+        d="M12 19H3"
+      />
+      <path
+        d="M14 3v4"
+      />
+      <path
+        d="M16 17v4"
+      />
+      <path
+        d="M21 12h-9"
+      />
+      <path
+        d="M21 19h-5"
+      />
+      <path
+        d="M21 5h-7"
+      />
+      <path
+        d="M8 10v4"
+      />
+      <path
+        d="M8 12H3"
+      />
+    </svg>
+    <span>
+      Filter Panel
+    </span>
+    <span
+      class="bg-cyan-500 text-slate-950 font-bold h-4 w-4 rounded-full flex items-center justify-center text-[9px] ml-0.5"
+    >
+      3
+    </span>
+  </button>
+</div>
+`;
+
+exports[`ProviderCard Component Suite renders provider name, tags and trust scores 1`] = `
+<div
+  class="bg-slate-900/50 backdrop-blur-md border border-slate-800 rounded-xl p-5 shadow-lg flex flex-col gap-4 transition-all hover:border-slate-700/80 hover:translate-y-[-2px] duration-200"
+>
+  <div
+    class="flex items-center justify-between"
+  >
+    <div
+      data-testid="service-badge"
+    >
+      software-development
+    </div>
+    <div
+      class="flex items-center gap-2"
+    >
+      <div
+        class="group relative px-2 py-0.5 border rounded text-[9px] font-bold font-mono flex items-center gap-1 select-none cursor-help text-cyan-400 border-cyan-900/30 bg-cyan-950/30"
+      >
+        <span>
+          Trust: 
+          99
+        </span>
+        <div
+          class="absolute right-0 bottom-full mb-1.5 w-48 bg-slate-900 border border-slate-800 p-2.5 rounded-lg shadow-2xl text-[9px] text-text-secondary leading-normal font-sans hidden group-hover:block z-50 pointer-events-none"
+        >
+          <div
+            class="font-bold text-text-primary mb-1 border-b border-slate-800 pb-0.5 text-[8px] uppercase tracking-wider"
+          >
+            Score Breakdown
+          </div>
+          <div
+            class="space-y-0.5 mt-1"
+          >
+            <div
+              class="flex justify-between"
+            >
+              <span>
+                Verification:
+              </span>
+              <span
+                class="font-bold text-text-primary"
+              >
+                25
+                /25
+              </span>
+            </div>
+            <div
+              class="flex justify-between"
+            >
+              <span>
+                Rating:
+              </span>
+              <span
+                class="font-bold text-text-primary"
+              >
+                24
+                /25
+              </span>
+            </div>
+            <div
+              class="flex justify-between"
+            >
+              <span>
+                Completion:
+              </span>
+              <span
+                class="font-bold text-text-primary"
+              >
+                24.5
+                /25
+              </span>
+            </div>
+            <div
+              class="flex justify-between"
+            >
+              <span>
+                Response Speed:
+              </span>
+              <span
+                class="font-bold text-text-primary"
+              >
+                25
+                /25
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        aria-label="Rating: 4.8 out of 5 stars"
+        class="flex items-center gap-1.5"
+        role="img"
+      >
+        <div
+          class="flex items-center text-amber-400"
+        >
+          <svg
+            class="h-3.5 w-3.5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            />
+          </svg>
+          <svg
+            class="h-3.5 w-3.5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            />
+          </svg>
+          <svg
+            class="h-3.5 w-3.5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            />
+          </svg>
+          <svg
+            class="h-3.5 w-3.5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            />
+          </svg>
+          <svg
+            class="h-3.5 w-3.5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            />
+          </svg>
+        </div>
+        <span
+          class="text-xs font-bold text-text-secondary mt-0.5"
+        >
+          4.8
+          <span
+            class="text-text-muted font-medium ml-1"
+          >
+            (
+            42
+            )
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h3
+      class="text-lg font-bold font-display text-text-primary group-hover:text-emerald-400 transition-colors"
+    >
+      Apex Software Labs
+    </h3>
+    <p
+      class="text-sm text-text-secondary line-clamp-2 mt-1 leading-normal"
+    >
+      Providing stellar full-stack development services.
+    </p>
+  </div>
+  <div
+    class="flex flex-wrap gap-1.5 mt-1"
+  >
+    <span
+      class="bg-slate-950 border border-slate-850 text-text-muted text-[10px] font-bold px-2 py-0.5 rounded"
+    >
+      React
+    </span>
+    <span
+      class="bg-slate-950 border border-slate-850 text-text-muted text-[10px] font-bold px-2 py-0.5 rounded"
+    >
+      TypeScript
+    </span>
+    <span
+      class="bg-slate-950 border border-slate-850 text-text-muted text-[10px] font-bold px-2 py-0.5 rounded"
+    >
+      Node.js
+    </span>
+    <span
+      class="bg-slate-950 border border-slate-850 text-text-muted text-[10px] font-bold px-2 py-0.5 rounded"
+    >
+      GraphQL
+    </span>
+  </div>
+  <div
+    class="border-t border-slate-850/60 my-1"
+  />
+  <div
+    class="flex items-center justify-between mt-auto pt-1"
+  >
+    <div>
+      <span
+        class="text-[10px] uppercase font-bold text-text-muted tracking-wider block"
+      >
+        Budget Scale
+      </span>
+      <div
+        data-testid="price-range"
+      >
+        $
+        5000
+         - $
+        20000
+      </div>
+    </div>
+    <a
+      class="bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 text-text-primary text-xs font-semibold px-4 py-2 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500"
+      href="/marketplace/providers/provider-id-1"
+    >
+      View Profile
+    </a>
+  </div>
+</div>
+`;
+
+exports[`RatingDisplay Component Suite renders rating score and count correctly 1`] = `
+<div
+  aria-label="Rating: 4.5 out of 5 stars"
+  class="flex items-center gap-1.5"
+  role="img"
+>
+  <div
+    class="flex items-center text-amber-400"
+  >
+    <svg
+      class="h-3.5 w-3.5"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+    >
+      <path
+        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+      />
+    </svg>
+    <svg
+      class="h-3.5 w-3.5"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+    >
+      <path
+        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+      />
+    </svg>
+    <svg
+      class="h-3.5 w-3.5"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+    >
+      <path
+        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+      />
+    </svg>
+    <svg
+      class="h-3.5 w-3.5"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+    >
+      <path
+        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+      />
+    </svg>
+    <svg
+      class="h-3.5 w-3.5"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+    >
+      <defs>
+        <lineargradient
+          id="halfGrad"
+        >
+          <stop
+            offset="50%"
+            stop-color="currentColor"
+          />
+          <stop
+            offset="50%"
+            stop-color="#475569"
+          />
+        </lineargradient>
+      </defs>
+      <path
+        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+        fill="url(#halfGrad)"
+      />
+    </svg>
+  </div>
+  <span
+    class="text-xs font-bold text-text-secondary mt-0.5"
+  >
+    4.5
+    <span
+      class="text-text-muted font-medium ml-1"
+    >
+      (
+      12
+      )
+    </span>
+  </span>
+</div>
+`;
