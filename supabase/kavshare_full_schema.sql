@@ -1,77 +1,11 @@
--- KavShare Supabase Initial Database Schema (Clerk Auth Compatible)
+-- KavShare Supabase â€” Initial Setup
 -- Migration Date: 2026-05-27
+--
+-- This is the very first migration. It only enables the UUID extension.
+-- All tables are created in subsequent numbered migrations.
 
--- 1. Enable UUID Extension
+-- Enable UUID extension (required by all other migrations)
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
--- 2. Profiles Table (Linked to Clerk User IDs)
-CREATE TABLE IF NOT EXISTS public.profiles (
-    id TEXT PRIMARY KEY, -- Clerk User ID (e.g. user_2Nizn3...)
-    email TEXT UNIQUE NOT NULL,
-    full_name TEXT,
-    role TEXT DEFAULT 'seeker' NOT NULL, -- 'provider' or 'seeker'
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
-);
-
--- Enable RLS for profiles
-ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
-
--- Profiles Policies
-CREATE POLICY "Allow public read access to profiles" 
-ON public.profiles FOR SELECT USING (true);
-
-CREATE POLICY "Allow users to update their own profile" 
-ON public.profiles FOR UPDATE USING (id = current_setting('request.jwt.claims', true)::json->>'sub');
-
--- 3. Files Table (Metadata of uploaded shares)
-CREATE TABLE IF NOT EXISTS public.files (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id TEXT REFERENCES public.profiles(id) ON DELETE SET NULL,
-    name TEXT NOT NULL,
-    size BIGINT NOT NULL,
-    mime_type TEXT NOT NULL,
-    storage_path TEXT NOT NULL UNIQUE,
-    is_encrypted BOOLEAN DEFAULT false NOT NULL,
-    download_count INTEGER DEFAULT 0 NOT NULL,
-    expires_at TIMESTAMP WITH TIME ZONE,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
-);
-
--- Enable RLS for files
-ALTER TABLE public.files ENABLE ROW LEVEL SECURITY;
-
--- Files Policies
-CREATE POLICY "Allow public read/download by file ID" 
-ON public.files FOR SELECT USING (expires_at IS NULL OR expires_at > now());
-
-CREATE POLICY "Allow users to upload and manage their files" 
-ON public.files FOR ALL USING (user_id = current_setting('request.jwt.claims', true)::json->>'sub');
-
--- 4. Downloads Logging Table
-CREATE TABLE IF NOT EXISTS public.downloads (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    file_id UUID REFERENCES public.files(id) ON DELETE CASCADE NOT NULL,
-    ip_address_hash TEXT,
-    user_agent TEXT,
-    downloaded_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
-);
-
--- Enable RLS for downloads
-ALTER TABLE public.downloads ENABLE ROW LEVEL SECURITY;
-
--- Downloads Policies
-CREATE POLICY "Allow insert downloads logging to anyone" 
-ON public.downloads FOR INSERT WITH CHECK (true);
-
-CREATE POLICY "Allow owners to view download logs of their files" 
-ON public.downloads FOR SELECT USING (
-    EXISTS (
-        SELECT 1 FROM public.files 
-        WHERE public.files.id = public.downloads.file_id 
-        AND public.files.user_id = current_setting('request.jwt.claims', true)::json->>'sub'
-    )
-);
 
 -- KavShare Supabase Users Table Migration
 -- Migration Date: 2026-05-28
@@ -124,42 +58,10 @@ $$ language 'plpgsql';
 CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON public.users
     FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 
--- 6. Indexes for Quick Lookup Checks
+-- 6. Indexes for Quick Lookup
 CREATE INDEX IF NOT EXISTS users_clerk_id_idx ON public.users (clerk_id);
 CREATE INDEX IF NOT EXISTS users_email_idx ON public.users (email);
 
--- 7. Update existing Files table relation to map to Users
--- Drop the RLS policy that references user_id before altering the column type
-DO $$ BEGIN
-    IF EXISTS (
-        SELECT 1 FROM pg_policies
-        WHERE tablename = 'files'
-          AND policyname = 'Allow users to upload and manage their files'
-    ) THEN
-        DROP POLICY "Allow users to upload and manage their files" ON public.files;
-    END IF;
-END $$;
-
--- Drop old foreign key constraint if present
-ALTER TABLE IF EXISTS public.files DROP CONSTRAINT IF EXISTS files_user_id_fkey;
-
--- Alter column type to VARCHAR(255) to hold Clerk IDs
-ALTER TABLE IF EXISTS public.files ALTER COLUMN user_id TYPE VARCHAR(255);
-
--- Recreate the foreign key pointing to users.clerk_id
-ALTER TABLE IF EXISTS public.files ADD CONSTRAINT files_user_id_fkey
-    FOREIGN KEY (user_id) REFERENCES public.users(clerk_id) ON DELETE SET NULL;
-
--- Recreate the RLS policy with the updated column type
-DO $$ BEGIN
-    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'files' AND table_schema = 'public') THEN
-        EXECUTE $policy$
-            CREATE POLICY "Allow users to upload and manage their files"
-            ON public.files FOR ALL
-            USING (user_id = current_setting('request.jwt.claims', true)::json->>'sub')
-        $policy$;
-    END IF;
-END $$;
 
 -- KavShare Supabase Profiles & Triggers Migration
 -- Migration Date: 2026-05-28
