@@ -128,15 +128,38 @@ CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON public.users
 CREATE INDEX IF NOT EXISTS users_clerk_id_idx ON public.users (clerk_id);
 CREATE INDEX IF NOT EXISTS users_email_idx ON public.users (email);
 
--- 7. Update existing Files table relation to map to Users (optional cleanup)
--- First drop constraint from profiles if present
+-- 7. Update existing Files table relation to map to Users
+-- Drop the RLS policy that references user_id before altering the column type
+DO $$ BEGIN
+    IF EXISTS (
+        SELECT 1 FROM pg_policies
+        WHERE tablename = 'files'
+          AND policyname = 'Allow users to upload and manage their files'
+    ) THEN
+        DROP POLICY "Allow users to upload and manage their files" ON public.files;
+    END IF;
+END $$;
+
+-- Drop old foreign key constraint if present
 ALTER TABLE IF EXISTS public.files DROP CONSTRAINT IF EXISTS files_user_id_fkey;
 
--- Update files table user_id column from profiles TEXT to users clerk_id TEXT (compat) or UUID
--- To keep DB referencing robust, let's allow files user_id to match clerk_id:
+-- Alter column type to VARCHAR(255) to hold Clerk IDs
 ALTER TABLE IF EXISTS public.files ALTER COLUMN user_id TYPE VARCHAR(255);
-ALTER TABLE IF EXISTS public.files ADD CONSTRAINT files_user_id_fkey 
+
+-- Recreate the foreign key pointing to users.clerk_id
+ALTER TABLE IF EXISTS public.files ADD CONSTRAINT files_user_id_fkey
     FOREIGN KEY (user_id) REFERENCES public.users(clerk_id) ON DELETE SET NULL;
+
+-- Recreate the RLS policy with the updated column type
+DO $$ BEGIN
+    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'files' AND table_schema = 'public') THEN
+        EXECUTE $policy$
+            CREATE POLICY "Allow users to upload and manage their files"
+            ON public.files FOR ALL
+            USING (user_id = current_setting('request.jwt.claims', true)::json->>'sub')
+        $policy$;
+    END IF;
+END $$;
 
 -- KavShare Supabase Profiles & Triggers Migration
 -- Migration Date: 2026-05-28
