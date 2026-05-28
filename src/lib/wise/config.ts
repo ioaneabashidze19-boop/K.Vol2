@@ -11,7 +11,11 @@ import { z } from "zod";
 // ─── Environment ───────────────────────────────────────────────────────────────
 
 const WISE_API_TOKEN = process.env.WISE_API_TOKEN ?? "";
-const WISE_ENV = (process.env.WISE_ENV ?? "sandbox") as "sandbox" | "live";
+// Support both WISE_ENV and WISE_ENVIRONMENT (test/sandbox or production/live)
+const WISE_ENV_RAW = (process.env.WISE_ENVIRONMENT ?? process.env.WISE_ENV ?? "sandbox").toLowerCase();
+export const WISE_ENV: "sandbox" | "live" = 
+  WISE_ENV_RAW === "production" || WISE_ENV_RAW === "live" ? "live" : "sandbox";
+
 const WISE_PROFILE_ID = process.env.WISE_PROFILE_ID ?? ""; // Business profile numeric ID
 
 /** Base URL differs between sandbox and production. */
@@ -134,6 +138,17 @@ export async function createQuote(
   });
 }
 
+/**
+ * Alias wrapper for createQuote matching requested signature
+ */
+export async function createTransferQuote(
+  amount: number,
+  sourceCurrency: string,
+  targetCurrency: string
+): Promise<WiseQuote> {
+  return createQuote(sourceCurrency, targetCurrency, amount);
+}
+
 // ─── Recipient account ─────────────────────────────────────────────────────────
 
 export interface WiseRecipient {
@@ -187,7 +202,7 @@ export interface WiseTransfer {
  * Creates a transfer from an approved quote to a recipient account.
  * Pass a unique `idempotencyKey` (e.g. schedule row ID) to prevent duplicates.
  */
-export async function createTransfer(params: {
+export async function createTransferWithOptions(params: {
   quoteId: string;
   targetAccountId: number;
   reference?: string;
@@ -206,6 +221,24 @@ export async function createTransfer(params: {
         sourceOfFunds: "verification.source.of.funds.business",
       },
     },
+  });
+}
+
+/**
+ * Creates a transfer matching exact signature: createTransfer(quoteId, recipientId)
+ */
+export async function createTransfer(
+  quoteId: string,
+  recipientId: number,
+  idempotencyKey?: string,
+  reference?: string
+): Promise<WiseTransfer> {
+  const key = idempotencyKey ?? crypto.randomUUID();
+  return createTransferWithOptions({
+    quoteId,
+    targetAccountId: recipientId,
+    reference,
+    idempotencyKey: key,
   });
 }
 
@@ -242,6 +275,25 @@ export async function getTransferStatus(
   return wiseRequest(`/v1/transfers/${transferId}`);
 }
 
+// ─── Validate Wise Account ─────────────────────────────────────────────────────
+
+/**
+ * Validates a Wise recipient account ID by trying to fetch details.
+ */
+export async function validateWiseAccount(
+  accountId: number | string
+): Promise<boolean> {
+  try {
+    const numericId = Number(accountId);
+    if (isNaN(numericId)) return false;
+    const details = await wiseRequest<{ id: number }>(`/v1/accounts/${numericId}`);
+    return !!details && details.id === numericId;
+  } catch (error) {
+    console.error(`[Wise] Account validation failed for ID ${accountId}:`, error);
+    return false;
+  }
+}
+
 // ─── Zod validation schemas ────────────────────────────────────────────────────
 
 /** Georgian IBAN: GE + 2 check digits + 16 digits = 20 chars total. */
@@ -262,3 +314,17 @@ export const georgianBankAccountSchema = z.object({
 });
 
 export type GeorgianBankAccount = z.infer<typeof georgianBankAccountSchema>;
+
+// ─── Exported Wise SDK-like Instance ───────────────────────────────────────────
+
+export const Wise = {
+  getExchangeRate,
+  createTransferQuote,
+  createTransfer,
+  getTransferStatus,
+  validateWiseAccount,
+  createGeorgianRecipient,
+  fundTransfer,
+  getWiseProfileId,
+};
+

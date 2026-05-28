@@ -94,12 +94,12 @@ export async function POST(req: Request) {
     const quote = await createQuote(sourceCurrency, "GEL", amountGEL);
 
     // ── 6. Create the transfer ───────────────────────────────────────────────
-    const transfer = await createTransfer({
-      quoteId: quote.id,
-      targetAccountId: wiseRecipientId,
-      reference: `KavShare commission — schedule ${scheduleId.substring(0, 8)}`,
-      idempotencyKey: scheduleId,  // UUID of schedule = idempotency key
-    });
+    const transfer = await createTransfer(
+      quote.id,
+      wiseRecipientId,
+      scheduleId,
+      `KavShare commission — schedule ${scheduleId.substring(0, 8)}`
+    );
 
     // ── 7. Fund (execute) the transfer ───────────────────────────────────────
     const fundResult = await fundTransfer(transfer.id);
