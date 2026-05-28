@@ -2627,3 +2627,13 @@ ALTER TABLE IF EXISTS public.commission_payments
 COMMENT ON COLUMN public.commission_payments.wise_transfer_id IS 'Wise payout transfer ID associated with this payment.';
 COMMENT ON COLUMN public.commission_payments.exchange_rate IS 'Exchange rate conversion factor applied by Wise.';
 COMMENT ON COLUMN public.commission_payments.fee_amount IS 'Service/transaction fee charged by Wise.';
+
+-- KavShare Supabase Migration: Add admin_notes and metadata JSONB to commission_payments
+-- Migration Date: 2026-05-28
+
+ALTER TABLE IF EXISTS public.commission_payments
+    ADD COLUMN IF NOT EXISTS admin_notes TEXT,
+    ADD COLUMN IF NOT EXISTS metadata JSONB DEFAULT '{}'::jsonb;
+
+COMMENT ON COLUMN public.commission_payments.admin_notes IS 'Notes recorded by admin for manual or special payout validations.';
+COMMENT ON COLUMN public.commission_payments.metadata IS 'Custom attributes, manual overrides, and transaction metadata.';
