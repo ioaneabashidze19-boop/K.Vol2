@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Contract Cancellation Notice — KavShare</title>
+  <style>
+    body{margin:0;padding:0;background:#0a0f1a;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#e2e8f0}
+    .wrapper{max-width:560px;margin:40px auto;background:#111827;border:1px solid #1e2a3a;border-radius:20px;overflow:hidden}
+    .header{background:linear-gradient(135deg,#4a0010 0%,#1a0a1a 100%);padding:36px 40px 28px;text-align:center}
+    .logo{font-size:22px;font-weight:900;color:#fff;letter-spacing:-0.5px;margin-bottom:6px}
+    .logo span{color:#f43f5e}
+    .header-title{font-size:18px;font-weight:800;color:#fecdd3;margin:0;line-height:1.3}
+    .header-sub{font-size:12px;color:#fda4af;margin-top:6px}
+    .body{padding:32px 40px}
+    .alert-box{background:#2d0a0a;border:1px solid #7f1d1d;border-radius:12px;padding:16px 20px;margin-bottom:24px;display:flex;gap:14px;align-items:flex-start}
+    .alert-icon{width:20px;height:20px;flex-shrink:0;margin-top:1px}
+    .alert-text{font-size:13px;color:#fca5a5;line-height:1.6}
+    .section-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#64748b;margin-bottom:10px}
+    .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+    .meta-item{background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:12px 14px}
+    .meta-label{font-size:10px;color:#475569;font-weight:600;margin-bottom:3px}
+    .meta-value{font-size:13px;color:#e2e8f0;font-weight:600}
+    .penalty-card{background:#0f172a;border:1px solid #1e293b;border-radius:12px;overflow:hidden;margin-bottom:24px}
+    .penalty-header{background:#1a0a0a;border-bottom:1px solid #1e293b;padding:12px 18px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#64748b}
+    .penalty-row{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid #0f172a;font-size:13px}
+    .penalty-row:last-child{border-bottom:none}
+    .penalty-label{color:#94a3b8}
+    .penalty-value{font-weight:600;color:#e2e8f0}
+    .penalty-total-row{background:#1a0a10;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;font-weight:800}
+    .penalty-total-label{font-size:13px;color:#e2e8f0}
+    .penalty-total-value{font-size:16px;color:#f43f5e}
+    .reason-box{background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:16px 18px;margin-bottom:24px}
+    .reason-label{font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+    .reason-text{font-size:13px;color:#e2e8f0;line-height:1.6}
+    .audit-box{background:#0a1628;border:1px solid #1e3a5f;border-radius:12px;padding:16px 18px;margin-bottom:24px}
+    .audit-label{font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+    .audit-ref{font-family:'Courier New',monospace;font-size:13px;color:#38bdf8;letter-spacing:.05em}
+    .steps-list{list-style:none;padding:0;margin:0 0 24px 0;space-y:8px}
+    .steps-list li{display:flex;gap:12px;align-items:flex-start;font-size:12px;color:#94a3b8;line-height:1.6;padding:8px 0;border-bottom:1px solid #1e2a3a}
+    .steps-list li:last-child{border-bottom:none}
+    .step-num{width:20px;height:20px;border-radius:50%;background:#1e3a5f;border:1px solid #1e4a8f;color:#38bdf8;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+    .cta-btn{display:block;text-align:center;background:linear-gradient(135deg,#dc2626,#9f1239);color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:14px 28px;border-radius:12px;margin-bottom:24px}
+    .footer{background:#0a0f1a;border-top:1px solid #1e2a3a;padding:20px 40px;text-align:center;font-size:11px;color:#475569;line-height:1.7}
+    .footer a{color:#38bdf8;text-decoration:none}
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">Kav<span>Share</span></div>
+      <h1 class="header-title">Contract Cancellation Notice</h1>
+      <p class="header-sub">This email confirms the cancellation of your contract agreement.</p>
+    </div>
+
+    <!-- Body -->
+    <div class="body">
+      <!-- Alert -->
+      <div class="alert-box">
+        <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        <p class="alert-text">
+          Your contract <strong>{{CONTRACT_TITLE}}</strong> has been cancelled effective <strong>{{CANCELLATION_DATE}}</strong>.
+          Early termination penalties apply as detailed below.
+        </p>
+      </div>
+
+      <!-- Contract Details -->
+      <p class="section-title">Contract Details</p>
+      <div class="meta-grid">
+        <div class="meta-item">
+          <div class="meta-label">Contract ID</div>
+          <div class="meta-value">{{CONTRACT_ID_SHORT}}</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Start Date</div>
+          <div class="meta-value">{{START_DATE}}</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Provider</div>
+          <div class="meta-value">{{PROVIDER_NAME}}</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Client</div>
+          <div class="meta-value">{{CLIENT_NAME}}</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Minimum Term</div>
+          <div class="meta-value">{{MINIMUM_TERM_MONTHS}} months</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Monthly Value</div>
+          <div class="meta-value">${{MONTHLY_VALUE}}</div>
+        </div>
+      </div>
+
+      <!-- Penalty Breakdown -->
+      <p class="section-title">Penalty Calculation Breakdown</p>
+      <div class="penalty-card">
+        <div class="penalty-header">Financial Summary</div>
+        <div class="penalty-row">
+          <span class="penalty-label">Months remaining in minimum term</span>
+          <span class="penalty-value">{{PENALTY_MONTHS}} months</span>
+        </div>
+        <div class="penalty-row">
+          <span class="penalty-label">Minimum contract value owed</span>
+          <span class="penalty-value">${{MINIMUM_REMAINING}}</span>
+        </div>
+        <div class="penalty-row">
+          <span class="penalty-label">Platform commission penalty ({{COMMISSION_RATE}}%)</span>
+          <span class="penalty-value" style="color:#f87171">${{PENALTY_AMOUNT}}</span>
+        </div>
+        <div class="penalty-total-row">
+          <span class="penalty-total-label">Total Amount Owed</span>
+          <span class="penalty-total-value">${{TOTAL_OWED}}</span>
+        </div>
+      </div>
+
+      <!-- Cancellation Reason -->
+      <p class="section-title">Stated Reason</p>
+      <div class="reason-box">
+        <div class="reason-label">Reason for Cancellation</div>
+        <div class="reason-text">{{CANCELLATION_REASON}}</div>
+        {{#if NOTES}}
+        <div class="reason-label" style="margin-top:12px">Additional Notes</div>
+        <div class="reason-text" style="color:#94a3b8">{{NOTES}}</div>
+        {{/if}}
+      </div>
+
+      <!-- Audit Reference -->
+      <p class="section-title">Billing Reference</p>
+      <div class="audit-box">
+        <div class="audit-label">Audit Trail Reference</div>
+        <div class="audit-ref">{{AUDIT_REFERENCE}}</div>
+      </div>
+
+      <!-- Next Steps -->
+      <p class="section-title">Next Steps</p>
+      <ul class="steps-list">
+        <li>
+          <div class="step-num">1</div>
+          <span>Review the penalty amount of <strong style="color:#fca5a5">${{PENALTY_AMOUNT}}</strong>. This will appear as a pending invoice in your commission ledger.</span>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <span>Log in to your KavShare dashboard to arrange payment or dispute the penalty calculation if you believe there is an error.</span>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <span>All future scheduled commission entries tied to this contract have been cancelled or flagged as penalty entries.</span>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <span>If you have questions, contact our platform support team with your audit reference <strong style="color:#38bdf8">{{AUDIT_REFERENCE}}</strong>.</span>
+        </li>
+      </ul>
+
+      <!-- CTA -->
+      <a href="{{DASHBOARD_URL}}/provider/commissions" class="cta-btn">
+        View Penalty Invoice in Dashboard →
+      </a>
+
+      <p style="font-size:12px;color:#475569;text-align:center;line-height:1.7">
+        This is an automated notification from the KavShare platform.<br/>
+        Both the <strong style="color:#94a3b8">{{CLIENT_NAME}}</strong> and{" "}
+        <strong style="color:#94a3b8">{{PROVIDER_NAME}}</strong> have received copies of this notice.
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>© 2026 KavShare Platform. All rights reserved.</p>
+      <p>
+        <a href="{{DASHBOARD_URL}}">Dashboard</a> ·
+        <a href="{{DASHBOARD_URL}}/support">Support</a> ·
+        <a href="{{DASHBOARD_URL}}/legal/terms">Terms of Service</a>
+      </p>
+      <p style="margin-top:8px;font-size:10px;color:#334155">
+        Ref: {{AUDIT_REFERENCE}} · Sent: {{CANCELLATION_DATE}}
+      </p>
+    </div>
+  </div>
+</body>
+</html>

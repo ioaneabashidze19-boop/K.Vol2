@@ -1,27 +1,12 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
+import { notFound } from "next/navigation";
 
-import { ClerkProvider } from "@clerk/nextjs";
-import type { Metadata } from "next";
-
-import "../globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "KavShare - Secure & Fast File Sharing",
-  description: "Share your files instantly and securely across devices.",
-};
+import AppHeader from "@/components/layout/AppHeader";
+import Footer from "@/components/layout/Footer";
 
 export async function generateStaticParams() {
-  return [{ locale: "en" }, { locale: "es" }, { locale: "fr" }];
+  return [{ locale: "en" }, { locale: "es" }, { locale: "fr" }, { locale: "ka" }];
 }
 
 export default async function LocaleLayout({
@@ -33,14 +18,24 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
 
+  // Validate locale matching
+  if (!["en", "es", "fr", "ka"].includes(locale)) {
+    notFound();
+  }
+
+  // Load message catalogue
+  const messages = await getMessages();
+
   return (
-    <ClerkProvider>
-      <html
-        lang={locale}
-        className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      >
-        <body className="min-h-full flex flex-col bg-slate-950 text-slate-100">{children}</body>
-      </html>
-    </ClerkProvider>
+    <NextIntlClientProvider
+      messages={messages}
+      locale={locale}
+    >
+      <div className="flex flex-col min-h-screen">
+        <AppHeader />
+        <main className="flex-1 flex flex-col">{children}</main>
+        <Footer />
+      </div>
+    </NextIntlClientProvider>
   );
 }

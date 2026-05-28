@@ -1,0 +1,14 @@
+{
+  "Common": {
+    "title": "KavShare",
+    "description": "Compartir archivos de forma rápida y segura",
+    "logout": "Cerrar sesión",
+    "dashboard": "Panel de control"
+  },
+  "LocaleSwitcher": {
+    "label": "Idioma",
+    "en": "English",
+    "es": "Español",
+    "fr": "Français"
+  }
+}

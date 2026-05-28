@@ -1,0 +1,70 @@
+{
+  "navigation": {
+    "home": "Home",
+    "marketplace": "Marketplace",
+    "dashboard": "Dashboard",
+    "chat": "Messages",
+    "login": "Sign In",
+    "register": "Sign Up",
+    "logout": "Sign Out",
+    "language": "Language"
+  },
+  "auth": {
+    "welcome": "Welcome back to KavShare",
+    "roleSelection": "Select your workspace role",
+    "seekerRole": "Seeker / Buyer",
+    "seekerDesc": "I want to procure services from verified providers",
+    "providerRole": "Provider / Vendor",
+    "providerDesc": "I want to offer services and showcase my company",
+    "signUpButton": "Create Account",
+    "signInButton": "Access Dashboard",
+    "sessionExpired": "Session expired, please log in again."
+  },
+  "marketplace": {
+    "title": "Provider Directory",
+    "subtitle": "Discover top-rated software, development, and design providers",
+    "searchPlaceholder": "Search providers, skills, tech stack...",
+    "matchButton": "Find Matched Providers",
+    "activeStatus": "Active Status",
+    "noResults": "No provider companies found matching your filters.",
+    "startingPrice": "Starting Price",
+    "rating": "Verified Rating"
+  },
+  "dashboard": {
+    "seekerTitle": "Seeker Dashboard",
+    "providerTitle": "Provider Dashboard",
+    "adminTitle": "System Administration",
+    "activeContracts": "Active Contracts",
+    "totalSpent": "Total Spent",
+    "totalEarned": "Total Earnings",
+    "pendingCommissions": "Pending Commission Dues",
+    "overview": "Overview",
+    "engagements": "Engagements",
+    "messages": "Conversations",
+    "reviews": "Client Reviews"
+  },
+  "forms": {
+    "companyNameLabel": "Company Name",
+    "companyNamePlaceholder": "Acme Corporation LLC",
+    "budgetLabel": "Estimated Budget ($)",
+    "budgetPlaceholder": "e.g. 5000",
+    "techStackLabel": "Required Tech Stack",
+    "techStackPlaceholder": "React, Node.js, Python, PostgreSQL",
+    "submit": "Submit Request",
+    "saveChanges": "Save Changes",
+    "cancel": "Cancel"
+  },
+  "errors": {
+    "unauthorized": "Access denied. You are not authorized to view this page.",
+    "notFound": "Requested resource could not be found.",
+    "invalidInput": "Please verify and correct the invalid fields.",
+    "cancellationViolated": "Cancellation request violates the contract minimum term rules.",
+    "generic": "A system error occurred. Please try again later."
+  },
+  "success": {
+    "contractActivated": "Billing contract successfully activated.",
+    "paymentRecorded": "Payment recorded and ledger updated.",
+    "profileUpdated": "Workspace profile saved successfully.",
+    "postCreated": "Procurement post published to marketplace board."
+  }
+}
