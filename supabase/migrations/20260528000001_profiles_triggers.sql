@@ -1,6 +1,14 @@
 -- KavShare Supabase Profiles & Triggers Migration
 -- Migration Date: 2026-05-28
 
+-- Safety guard: ensure the user_role_type enum exists
+-- (normally created in 20260528000000_users_table.sql, but guard here in case of run-order issues)
+DO $$ BEGIN
+    CREATE TYPE public.user_role_type AS ENUM ('admin', 'provider', 'seeker');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
 -- 1. Create Extended User Profiles Table (pointing to auth.users for native Supabase auth)
 CREATE TABLE IF NOT EXISTS public.profiles (
     id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,

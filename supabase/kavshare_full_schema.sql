@@ -66,6 +66,14 @@ CREATE INDEX IF NOT EXISTS users_email_idx ON public.users (email);
 -- KavShare Supabase Profiles & Triggers Migration
 -- Migration Date: 2026-05-28
 
+-- Safety guard: ensure the user_role_type enum exists
+-- (normally created in 20260528000000_users_table.sql, but guard here in case of run-order issues)
+DO $$ BEGIN
+    CREATE TYPE public.user_role_type AS ENUM ('admin', 'provider', 'seeker');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
 -- 1. Create Extended User Profiles Table (pointing to auth.users for native Supabase auth)
 CREATE TABLE IF NOT EXISTS public.profiles (
     id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -2597,3 +2605,13 @@ CREATE POLICY "Admins can manage all transfers"
 CREATE INDEX IF NOT EXISTS wise_transfers_schedule_id_idx ON public.wise_transfers (schedule_id);
 CREATE INDEX IF NOT EXISTS wise_transfers_company_id_idx ON public.wise_transfers (company_id);
 CREATE INDEX IF NOT EXISTS wise_transfers_transfer_id_idx ON public.wise_transfers (transfer_id);
+
+-- KavShare Supabase Migration: Add account_number and swift_code columns to company_bank_accounts
+-- Migration Date: 2026-05-28
+
+ALTER TABLE IF EXISTS public.company_bank_accounts 
+    ADD COLUMN IF NOT EXISTS account_number VARCHAR(50),
+    ADD COLUMN IF NOT EXISTS swift_code VARCHAR(30);
+
+COMMENT ON COLUMN public.company_bank_accounts.account_number IS 'Masked or plain account number for local reference.';
+COMMENT ON COLUMN public.company_bank_accounts.swift_code IS 'SWIFT/BIC code for the international or local clearing bank.';
